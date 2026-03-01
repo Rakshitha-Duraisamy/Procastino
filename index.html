@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ProcrastiNO – Smart Anti-Procrastination Timer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<header>
+  <div class="logo">⏱</div>
+  <div class="logo-text">
+    <h1>ProcrastiNO</h1>
+    <p>Smart Anti-Procrastination Timer</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- INPUT PHASE -->
+  <div id="phase-input">
+    <div>
+      <div class="badge">🔥 Focus Mode</div>
+      <h2 class="phase-title" style="margin-top:12px">What are you working on?</h2>
+      <p class="phase-sub">Name your task and commit. No going back.</p>
+    </div>
+    <form style="width:100%;display:flex;flex-direction:column;gap:12px" onsubmit="startSession(event)">
+      <div class="input-wrap">
+        <input id="task-input" class="task-input" placeholder="e.g. Finish the landing page design..." />
+      </div>
+      <button type="submit" class="btn-start" id="btn-start" disabled>
+        ⚡ Start Focus Session
+      </button>
+    </form>
+    <div class="input-hints">
+      <span>25 min focus</span><div class="dot"></div>
+      <span>5 min break</span><div class="dot"></div>
+      <span>Tab detection on</span>
+    </div>
+  </div>
+
+  <!-- FOCUS PHASE -->
+  <div id="phase-focus">
+    <div id="phase-badge" class="phase-badge-red">🧠 Deep Focus</div>
+    <div id="task-label" class="task-label"></div>
+
+    <div class="timer-ring-wrap">
+      <svg viewBox="0 0 300 300">
+        <circle class="ring-bg" cx="150" cy="150" r="130"/>
+        <circle class="ring-progress" id="ring" cx="150" cy="150" r="130"
+          stroke-dasharray="816.8" stroke-dashoffset="0"/>
+      </svg>
+      <div class="timer-display">
+        <span id="timer-time" class="timer-time">25:00</span>
+        <span id="timer-sub" class="timer-sub">Remaining</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn-icon" onclick="resetTimer()" title="Reset">↺</button>
+      <button class="btn-playpause" id="btn-play" onclick="togglePlay()">⏸</button>
+      <button class="btn-icon danger" onclick="endSession()" title="End Session">■</button>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat"><span id="stat-pomodoros" class="stat-val">0</span><span class="stat-lbl">Pomodoros</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><span id="stat-tabs" class="stat-val">0</span><span class="stat-lbl">Tab Switches</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><span id="stat-focus" class="stat-val">0m</span><span class="stat-lbl">Focused</span></div>
+    </div>
+  </div>
+
+  <!-- SUMMARY PHASE -->
+  <div id="phase-summary">
+    <div class="trophy-icon">🏆</div>
+    <div style="text-align:center">
+      <h2 class="summary-title">Session Complete</h2>
+      <p class="summary-sub">Great work on <span id="summary-task-name"></span></p>
+    </div>
+    <div class="score-box">
+      <p class="score-label">Focus Score</p>
+      <span id="summary-score" class="score-val green">100</span><span style="color:#52525b;font-size:18px">/100</span>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card-icon">🏆</div>
+        <div id="sum-pomodoros" class="stat-card-val">0</div>
+        <div class="stat-card-lbl">Pomodoros Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">⏱</div>
+        <div id="sum-time" class="stat-card-val">0m 0s</div>
+        <div class="stat-card-lbl">Total Focus Time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">👁</div>
+        <div id="sum-tabs" class="stat-card-val">0</div>
+        <div class="stat-card-lbl">Tab Switches</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">🌙</div>
+        <div id="sum-inactivity" class="stat-card-val">0</div>
+        <div class="stat-card-lbl">Inactivity Warnings</div>
+      </div>
+    </div>
+    <button class="btn-start" style="width:100%" onclick="restartApp()">↺ Start New Session</button>
+  </div>
+
+</main>
+
+<!-- WARNING POPUP -->
+<div id="warning-overlay">
+  <div class="warning-card">
+    <div id="w-icon" class="warning-icon-wrap red">👁</div>
+    <h3 id="w-title" class="warning-title">Tab Switch Detected!</h3>
+    <p id="w-msg" class="warning-msg">Finish your task first 😈</p>
+    <button id="w-btn" class="btn-dismiss red" onclick="dismissWarning()">I'm Back — Let's Go</button>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
